@@ -1,0 +1,327 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+}
+
+.header {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark-mode .header {
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header h1 {
+    color: white;
+    font-size: 28px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.theme-toggle {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.dark-mode .theme-toggle {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.save-button {
+    background: linear-gradient(45deg, #00b894, #00a085);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.save-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.download-button {
+    background: linear-gradient(45deg, #6c5ce7, #5f3dc4);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.download-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.run-button {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.run-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .run-button {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+}
+
+.dark-mode .save-button {
+    background: linear-gradient(45deg, #27ae60, #229954);
+}
+
+.dark-mode .download-button {
+    background: linear-gradient(45deg, #8e44ad, #7d3c98);
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    gap: 10px;
+    padding: 10px;
+}
+
+.editors {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.editor-box {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.dark-mode .editor-box {
+    background: rgba(45, 52, 54, 0.95);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.editor-header {
+    background: linear-gradient(45deg, #4facfe, #00f2fe);
+    color: white;
+    padding: 10px 15px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.editor-header.html {
+    background: linear-gradient(45deg, #ff9a9e, #fecfef);
+}
+
+.editor-header.css {
+    background: linear-gradient(45deg, #a8edea, #fed6e3);
+}
+
+.editor-header.js {
+    background: linear-gradient(45deg, #ffecd2, #fcb69f);
+}
+
+.dark-mode .editor-header.html {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+}
+
+.dark-mode .editor-header.css {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+}
+
+.dark-mode .editor-header.js {
+    background: linear-gradient(45deg, #f39c12, #e67e22);
+}
+
+textarea {
+    width: 100%;
+    height: calc(100% - 40px);
+    border: none;
+    padding: 15px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    resize: none;
+    outline: none;
+    background: white;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.dark-mode textarea {
+    background: #2d3436;
+    color: #ddd;
+}
+
+textarea::placeholder {
+    color: #999;
+}
+
+.dark-mode textarea::placeholder {
+    color: #636e72;
+}
+
+.output-section {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.dark-mode .output-section {
+    background: rgba(45, 52, 54, 0.95);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.output-header {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    padding: 10px 15px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.dark-mode .output-header {
+    background: linear-gradient(45deg, #2c3e50, #34495e);
+}
+
+iframe {
+    width: 100%;
+    height: calc(100% - 40px);
+    border: none;
+    background: white;
+}
+
+/* Success message styles */
+.success-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(45deg, #00b894, #00a085);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+}
+
+.success-message.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .container {
+        flex-direction: column;
+    }
+    
+    .editors {
+        flex-direction: row;
+        height: 300px;
+    }
+    
+    .editor-box {
+        min-width: 200px;
+    }
+    
+    .header-buttons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .editors {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .editor-box {
+        min-height: 150px;
+    }
+    
+    .header-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .header-buttons button {
+        width: 100%;
+        max-width: 200px;
+    }
+}

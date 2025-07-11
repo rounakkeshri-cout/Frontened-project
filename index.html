@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontened project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Code Runner</h1>
+        <div class="header-buttons">
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            <button class="intelligence-toggle" onclick="toggleIntelligence()">🧠 AI ON</button>
+            <button class="save-button" onclick="saveCode()">💾 Save</button>
+            <button class="download-button" onclick="downloadZip()">📦 Download ZIP</button>
+            <button class="run-button" onclick="runCode()">▶ Run Code</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="editors">
+            <div class="editor-box">
+                <div class="editor-header html">📄 HTML</div>
+                <div class="editor-wrapper">
+                    <textarea id="htmlCode" placeholder="Write your HTML code here..."></textarea>
+                    <div class="autocomplete-dropdown" id="htmlAutocomplete"></div>
+                </div>
+                <div class="error-panel" id="htmlErrors"></div>
+            </div>
+
+            <div class="editor-box">
+                <div class="editor-header css">🎨 CSS</div>
+                <div class="editor-wrapper">
+                    <textarea id="cssCode" placeholder="Write your CSS code here..."></textarea>
+                    <div class="autocomplete-dropdown" id="cssAutocomplete"></div>
+                </div>
+                <div class="error-panel" id="cssErrors"></div>
+            </div>
+
+            <div class="editor-box">
+                <div class="editor-header js">⚡ JavaScript</div>
+                <div class="editor-wrapper">
+                    <textarea id="jsCode" placeholder="Write your JavaScript code here..."></textarea>
+                    <div class="autocomplete-dropdown" id="jsAutocomplete"></div>
+                </div>
+                <div class="error-panel" id="jsErrors"></div>
+            </div>
+        </div>
+
+        <div class="output-section">
+            <div class="output-header">🖥️ Output</div>
+            <iframe id="output"></iframe>
+            <div class="console-panel" id="consolePanel">
+                <div class="console-header">📟 Console</div>
+                <div class="console-content" id="consoleContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
