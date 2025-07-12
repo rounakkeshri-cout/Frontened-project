@@ -1,9 +1,9 @@
-// Global variables
+
 let intelligenceEnabled = true;
 let currentSuggestions = [];
 let selectedSuggestionIndex = -1;
 
-// Code Intelligence Data
+
 const htmlTags = [
     'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'img', 'ul', 'ol', 'li',
     'table', 'tr', 'td', 'th', 'thead', 'tbody', 'form', 'input', 'button', 'textarea',
@@ -54,10 +54,10 @@ function runCode() {
     const output = document.getElementById("output");
     const consoleContent = document.getElementById("consoleContent");
     
-    // Clear console
+
     consoleContent.innerHTML = '';
     
-    // Check for errors before running
+
     if (intelligenceEnabled) {
         checkAllErrors();
     }
@@ -113,7 +113,7 @@ function runCode() {
     output.srcdoc = fullCode;
 }
 
-// Listen for console messages from iframe
+
 window.addEventListener('message', function(event) {
     if (event.data.type === 'console') {
         const consoleContent = document.getElementById("consoleContent");
@@ -223,7 +223,7 @@ function downloadZip() {
     });
 }
 
-// Code Intelligence Functions
+
 function showAutocomplete(textarea, suggestions, type) {
     if (!intelligenceEnabled || suggestions.length === 0) return;
     
@@ -268,12 +268,12 @@ function insertSuggestion(textarea, suggestion) {
     const textBefore = textarea.value.substring(0, cursorPos);
     const textAfter = textarea.value.substring(cursorPos);
     
-    // Find the start of the current word
+
     const words = textBefore.split(/[\s<>"'=]/);
     const currentWord = words[words.length - 1];
     const wordStart = cursorPos - currentWord.length;
     
-    // Replace the current word with the suggestion
+
     textarea.value = textarea.value.substring(0, wordStart) + suggestion + textAfter;
     textarea.selectionStart = textarea.selectionEnd = wordStart + suggestion.length;
     textarea.focus();
@@ -284,13 +284,13 @@ function getHTMLSuggestions(text, cursorPos) {
     const currentWord = textBefore.split(/[\s<>"'=]/).pop().toLowerCase();
     
     if (textBefore.includes('<') && !textBefore.includes('>')) {
-        // Suggest HTML tags
+
         return htmlTags.filter(tag => tag.startsWith(currentWord));
     } else if (textBefore.includes('=') && (textBefore.includes('"') || textBefore.includes("'"))) {
-        // Inside attribute value - suggest common values
+
         return [];
     } else if (textBefore.includes('<') && textBefore.includes(' ')) {
-        // Suggest HTML attributes
+
         return htmlAttributes.filter(attr => attr.startsWith(currentWord));
     }
     
@@ -302,7 +302,7 @@ function getCSSSuggestions(text, cursorPos) {
     const currentWord = textBefore.split(/[\s{}:;]/).pop().toLowerCase();
     
     if (textBefore.includes(':') && !textBefore.includes(';')) {
-        // Suggest CSS values
+
         const lines = textBefore.split('\n');
         const currentLine = lines[lines.length - 1];
         const property = currentLine.split(':')[0].trim();
@@ -312,7 +312,7 @@ function getCSSSuggestions(text, cursorPos) {
         }
         return [];
     } else {
-        // Suggest CSS properties
+
         return cssProperties.filter(prop => prop.startsWith(currentWord));
     }
 }
@@ -323,10 +323,10 @@ function getJSSuggestions(text, cursorPos) {
     
     const suggestions = [];
     
-    // Add keywords
+
     suggestions.push(...jsKeywords.filter(keyword => keyword.startsWith(currentWord)));
     
-    // Add methods
+
     suggestions.push(...jsMethods.filter(method => method.startsWith(currentWord)));
     
     return suggestions;
@@ -335,7 +335,7 @@ function getJSSuggestions(text, cursorPos) {
 function checkHTMLErrors(code) {
     const errors = [];
     
-    // Check for unclosed tags
+
     const openTags = [];
     const tagRegex = /<\/?([a-zA-Z][a-zA-Z0-9]*)[^>]*>/g;
     let match;
@@ -366,7 +366,7 @@ function checkHTMLErrors(code) {
 function checkCSSErrors(code) {
     const errors = [];
     
-    // Check for missing semicolons
+
     const lines = code.split('\n');
     lines.forEach((line, index) => {
         const trimmed = line.trim();
@@ -375,7 +375,7 @@ function checkCSSErrors(code) {
         }
     });
     
-    // Check for unmatched braces
+
     const openBraces = (code.match(/{/g) || []).length;
     const closeBraces = (code.match(/}/g) || []).length;
     
@@ -390,23 +390,23 @@ function checkJSErrors(code) {
     const errors = [];
     
     try {
-        // Basic syntax check using Function constructor
+
         new Function(code);
     } catch (error) {
         errors.push(`Syntax Error: ${error.message}`);
     }
     
-    // Check for common issues
+
     const lines = code.split('\n');
     lines.forEach((line, index) => {
         const trimmed = line.trim();
         
-        // Check for missing semicolons (basic check)
+
         if (trimmed.match(/^(var|let|const|return)\s+.*[^;{}]$/)) {
             errors.push(`Line ${index + 1}: Consider adding semicolon`);
         }
         
-        // Check for undefined variables (basic check)
+
         if (trimmed.includes('console.log') && !trimmed.includes('console.log(')) {
             errors.push(`Line ${index + 1}: Possible syntax error in console.log`);
         }
@@ -473,7 +473,7 @@ function showSuccessMessage(message) {
     }, 3000);
 }
 
-// Event Listeners
+
 document.addEventListener('DOMContentLoaded', function() {
     const savedTheme = localStorage.getItem('theme');
     const themeToggle = document.querySelector('.theme-toggle');
@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', function() {
         themeToggle.textContent = '🌙';
     }
     
-    // Load saved code
+
     const savedCode = localStorage.getItem('savedCode');
     if (savedCode) {
         const codeData = JSON.parse(savedCode);
@@ -494,19 +494,19 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById("jsCode").value = codeData.js || '';
     }
     
-    // Setup code intelligence for each textarea
+
     const htmlTextarea = document.getElementById("htmlCode");
     const cssTextarea = document.getElementById("cssCode");
     const jsTextarea = document.getElementById("jsCode");
     
-    // HTML Intelligence
+
     htmlTextarea.addEventListener('input', function(e) {
         if (!intelligenceEnabled) return;
         
         const suggestions = getHTMLSuggestions(this.value, this.selectionStart);
         showAutocomplete(this, suggestions, 'HTML');
         
-        // Check errors with delay
+
         clearTimeout(this.errorTimeout);
         this.errorTimeout = setTimeout(() => {
             const errors = checkHTMLErrors(this.value);
@@ -519,7 +519,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => hideAutocomplete(this.parentElement.querySelector('.autocomplete-dropdown')), 200);
     });
     
-    // CSS Intelligence
+
     cssTextarea.addEventListener('input', function(e) {
         if (!intelligenceEnabled) return;
         
@@ -538,7 +538,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => hideAutocomplete(this.parentElement.querySelector('.autocomplete-dropdown')), 200);
     });
     
-    // JavaScript Intelligence
+
     jsTextarea.addEventListener('input', function(e) {
         if (!intelligenceEnabled) return;
         
@@ -557,7 +557,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => hideAutocomplete(this.parentElement.querySelector('.autocomplete-dropdown')), 200);
     });
     
-    // Auto-run code when typing
+
     let timeout;
     function autoRun() {
         clearTimeout(timeout);
@@ -568,7 +568,7 @@ document.addEventListener('DOMContentLoaded', function() {
     cssTextarea.addEventListener('input', autoRun);
     jsTextarea.addEventListener('input', autoRun);
     
-    // Tab support
+
     document.querySelectorAll('textarea').forEach(textarea => {
         textarea.addEventListener('keydown', function(e) {
             if (e.key === 'Tab' && !document.querySelector('.autocomplete-dropdown[style*="block"]')) {
@@ -623,7 +623,7 @@ function updateSelectedSuggestion(dropdown) {
     });
 }
 
-// Keyboard shortcuts
+
 document.addEventListener('keydown', function(e) {
     if ((e.ctrlKey || e.metaKey) && e.key === 's') {
         e.preventDefault();
